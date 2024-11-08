@@ -8,7 +8,7 @@ function Hero() {
         <>
             <div
                 style={{ backgroundImage: `url(${heroPoster})` }}
-                className="relative bg-no-repeat bg-top h-screen bg-[length:110%_110%]"
+                className="relative bg-no-repeat bg-top h-screen bg-[length:100%_100%]"
             />
             <div className="absolute inset-0 bg-yellow-900/10 mix-blend-multiply" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/0" />
@@ -29,7 +29,10 @@ function Hero() {
 
                     <div className=" mt-10 text-white flex gap-5">
                         <button className="py-3 px-10 bg-white hover:opacity-80 text-black flex items-center gap-3 rounded-md">
-                            <PlayArrowIcon className="ml-[-15px]" sx={{ fontSize: 50 }} />
+                            <PlayArrowIcon
+                                className="ml-[-15px]"
+                                sx={{ fontSize: 50 }}
+                            />
                             <span className="text-2xl font-bold">Play</span>
                         </button>
                         <button className="py-3 px-5 bg-slate-400 hover:opacity-80 bg-opacity-10 flex items-center gap-3 rounded-md">

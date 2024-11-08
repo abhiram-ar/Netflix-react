@@ -2,6 +2,8 @@ import MovieCard from "./MovieCard";
 import moviePoster from "./../assets/meygan.webp";
 import movieList from "./../tempmovie";
 import { useRef } from "react";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 function MovieList() {
     const carosal = useRef(null);
@@ -14,9 +16,9 @@ function MovieList() {
         carosal.current.scrollLeft += 600;
     }
     return (
-        <div className="realative">
-            <div ref={carosal} className="overflow-hidden scroll-smooth">
-                <div className="relative inline-flex flex-nowrap gap-2">
+        <div className="relative">
+            <div ref={carosal} className="ml-16 overflow-hidden scroll-smooth">
+                <div className="inline-flex flex-nowrap gap-2">
                     {movieList.map((movie) => {
                         return (
                             <MovieCard
@@ -28,8 +30,17 @@ function MovieList() {
                     })}
                 </div>
             </div>
-                <button onClick={hanldeLeftClick}>click me</button>
-                <button onClick={hanldeRightClick}>click me</button>
+            <button 
+                className="absolute top-8 left-0 h-28 p-1 bg-black bg-opacity-10 hover:bg-opacity-50 rounded-3xl "
+                onClick={hanldeLeftClick}
+            >
+                <ChevronLeftIcon fontSize="large"/>
+            </button>
+            <button onClick={hanldeRightClick}
+            className="absolute top-8 right-0 h-28 p-1 bg-black bg-opacity-10 hover:bg-opacity-50 rounded-3xl"
+            >
+                <ChevronRightIcon fontSize="large"/>
+            </button>
         </div>
     );
 }
