@@ -12,7 +12,9 @@ function Hero() {
             />
             <div className="absolute inset-0 bg-yellow-900/10 mix-blend-multiply" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/0" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-black/10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-1% from-black/70 via-15% via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
             <div className="absolute inset-x-16 inset-y-28">
                 <div className="w-2/5">
                     <img src={heroTitle} alt="hero title" />

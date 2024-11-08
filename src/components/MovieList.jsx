@@ -1,5 +1,4 @@
 import MovieCard from "./MovieCard";
-import moviePoster from "./../assets/meygan.webp";
 import movieList from "./../tempmovie";
 import { useRef } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -9,14 +8,15 @@ function MovieList() {
     const carosal = useRef(null);
 
     function hanldeLeftClick() {
-        carosal.current.scrollLeft -= 600;
+        carosal.current.scrollLeft -= 1400;
     }
 
     function hanldeRightClick() {
-        carosal.current.scrollLeft += 600;
+        carosal.current.scrollLeft += 1400;
     }
     return (
-        <div className="relative">
+        <div className="relative mb-16">
+          <h2 className="ml-16 mb-2 text-3xl font-bold text-white">Trending</h2>
             <div ref={carosal} className="ml-16 overflow-hidden scroll-smooth">
                 <div className="inline-flex flex-nowrap gap-2">
                     {movieList.map((movie) => {
@@ -30,16 +30,17 @@ function MovieList() {
                     })}
                 </div>
             </div>
-            <button 
-                className="absolute top-8 left-0 h-28 p-1 bg-black bg-opacity-10 hover:bg-opacity-50 rounded-3xl "
+            <button
+                className="absolute top-20 left-0 h-28 p-1 text-white  bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl"
                 onClick={hanldeLeftClick}
             >
-                <ChevronLeftIcon fontSize="large"/>
+                <ChevronLeftIcon fontSize="large" />
             </button>
-            <button onClick={hanldeRightClick}
-            className="absolute top-8 right-0 h-28 p-1 bg-black bg-opacity-10 hover:bg-opacity-50 rounded-3xl"
+            <button
+                onClick={hanldeRightClick}
+                className="absolute top-20 right-0 h-28 p-1 text-white bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl"
             >
-                <ChevronRightIcon fontSize="large"/>
+                <ChevronRightIcon fontSize="large" />
             </button>
         </div>
     );
