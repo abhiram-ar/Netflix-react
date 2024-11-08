@@ -3,7 +3,7 @@ import avatar from "./../assets/avatar.png";
 
 function Navbar() {
     return (
-        <div className="w-screen fixed flex justify-between bg-slate-500 py-5 px-16 ">
+        <div className="w-screen fixed flex justify-between z-30 py-5 px-16 ">
             <div className="flex gap-10 justify-center items-center]">
                 <img src={logo} className="h-8" />
                 <ul className="flex gap-5 items-center font-semibold text-white">
