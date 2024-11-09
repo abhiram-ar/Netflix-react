@@ -3,10 +3,12 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import { useState } from "react";
-import { Tune } from "@mui/icons-material";
 
 function MovieCard({ moviePoster }) {
     const [isActive, setActive] = useState(false);
+
+
+
     return (
         <div
             onMouseEnter={() => setActive(true)}
