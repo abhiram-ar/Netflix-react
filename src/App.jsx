@@ -10,6 +10,11 @@ export default function App() {
     const [topRatedMovieData, setTopRatedMovieData] = useState(null);
     const [upComingMovieData, setUpComingMovieData] = useState(null);
 
+    const [airingTodaySeriesData, setAiringTodaySeriesData] = useState(null);
+    const [poppularSeriesData, setPopularSeriesData] = useState(null);
+    const [topRatedSeriesData, setTopRatedSeriesData] = useState(null);
+
+    // movies data fetching
     useEffect(() => {
         const options = {
             method: "GET",
@@ -62,34 +67,121 @@ export default function App() {
             options
         )
             .then((res) => res.json())
-            .then((res) => {console.log(`upcoming movie data fetch sucessful`)
-                setUpComingMovieData(res)
+            .then((res) => {
+                console.log(`upcoming movie data fetch sucessful`);
+                setUpComingMovieData(res);
             })
             .catch((err) => console.error(err));
+    }, []);
+
+    // TV series Data Fetching
+    useEffect(() => {
+        const options = {
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                Authorization:
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0N2I1YTNiYTYwM2E0YTNmOWI5ZDZhMGJjOTEyNWE5YiIsIm5iZiI6MTczMTA0MDA1NC41OTkyOTAxLCJzdWIiOiI2NzJkOTIxN2JlNzZiMDY0NGIzZGY0OWIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.nSyuKOosY6ayI2D8PH_c_E9xbftyV11Tuo7eLGs2l9A",
+            },
+        };
+
+        fetch(
+            "https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1",
+            options
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(`airing today data fetch sucessful`);
+                setAiringTodaySeriesData(res);
+            })
+            .catch((err) =>
+                console.error(`error while fetching airing today data`, err)
+            );
+
+        fetch(
+            "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+            options
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(`popular series data fetch sucessful`);
+                setPopularSeriesData(res);
+            })
+            .catch((err) =>
+                console.error(`error while fetching popular series data`, err)
+            );
+
+        fetch(
+            "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
+            options
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(`top rated series data fetch sucessful`);
+                setTopRatedSeriesData(res);
+            })
+            .catch((err) =>
+                console.error(
+                    `erroor while fetching top rateed series data`,
+                    err
+                )
+            );
     }, []);
 
     return (
         <>
             <Navbar>navbar</Navbar>
             <Hero></Hero>
-            {nowPlayingMovieData && popularMovieData && topRatedMovieData && upComingMovieData &&(
-                <div className="bg-black mt-5">
+            <div className="bg-black mt-5">
+                {nowPlayingMovieData &&
+                    popularMovieData &&
+                    topRatedMovieData &&
+                    upComingMovieData && (
+                        <>
+                            <MovieList
+                                sectionName="Now Playing"
+                                movieData={nowPlayingMovieData.results}
+                            />
+                            <MovieList
+                                sectionName="Popular Movies"
+                                movieData={popularMovieData.results}
+                            />
+                            <MovieList
+                                sectionName="Top Rated Movies"
+                                movieData={topRatedMovieData.results}
+                            />
+                            <MovieList
+                                sectionName="Upcoming Movies"
+                                movieData={upComingMovieData.results}
+                            />
+                        </>
+                    )}
+
+                {airingTodaySeriesData && (
                     <MovieList
-                        sectionName="Now Playing"
-                        movieData={nowPlayingMovieData.results}
-                    ></MovieList>
+                        sectionName="TV series Airing Today"
+                        movieData={airingTodaySeriesData.results}
+                        type="series"
+                    />
+                )}
+
+                {poppularSeriesData && (
                     <MovieList
-                        sectionName="Popular"
-                        movieData={popularMovieData.results}
-                    ></MovieList>
+                        sectionName="Popular TV Series"
+                        movieData={poppularSeriesData.results}
+                        type="series"
+                    />
+                )}
+
+                {topRatedMovieData && (
                     <MovieList
-                        sectionName="Top Rated"
-                        movieData={topRatedMovieData.results}
-                    ></MovieList>
-                    <MovieList sectionName="Upcoming" movieData={upComingMovieData.results}></MovieList>
-                    <Footer></Footer>
-                </div>
-            )}
+                        sectionName="Top Rated Series"
+                        movieData={topRatedSeriesData.results}
+                        type="series"
+                    />
+                )}
+                <Footer></Footer>
+            </div>
         </>
     );
 }

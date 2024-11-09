@@ -4,7 +4,7 @@ import { useRef } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-function MovieList({movieData = movieList, sectionName}) {
+function MovieList({movieData = movieList, sectionName, type}) {
     const carosal = useRef(null);
 
     function hanldeLeftClick() {
@@ -16,7 +16,7 @@ function MovieList({movieData = movieList, sectionName}) {
     }
     return (
         <div className="relative mt-[-8em]">
-            <h2 className="ml-16 mb-[-2em] text-3xl font-bold text-white">
+            <h2 className="ml-16 mb-[-2em] text-3xl font-bold text-white ">
                 {sectionName}
             </h2>
             <div
@@ -29,6 +29,7 @@ function MovieList({movieData = movieList, sectionName}) {
                             <MovieCard
                                 key={movie.id}
                                 movieDetails={movie}
+                                type={type}
                                 moviePoster={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                             />
                         );

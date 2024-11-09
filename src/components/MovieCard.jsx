@@ -7,7 +7,7 @@ import MovieDetailsModal from "./MovieDetailsModal";
 import { createPortal } from "react-dom";
 
 // eslint-disable-next-line react/prop-types
-function MovieCard({ moviePoster , movieDetails }) {
+function MovieCard({ moviePoster, movieDetails, type }) {
     const [isActive, setActive] = useState(false);
     const [ismodalOpen, setModalOpen] = useState(false);
 
@@ -15,21 +15,24 @@ function MovieCard({ moviePoster , movieDetails }) {
 
     const handleModalOpen = () => {
         setModalOpen(true);
+        document.body.style.overflowY = "hidden"
     };
 
     return (
         <div
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
-            className=" w-64 h-fit overflow-hidden rounded-lg shadow-lg shadow-black cursor-pointer transition-transform duration-300 hover:scale-150 hover:z-20"
+            className=" w-80 h-fit overflow-hidden rounded-lg shadow-lg shadow-black cursor-pointer transition-transform duration-300 hover:scale-125 hover:z-20"
         >
             {/* header */}
             <div className="relative">
                 <img src={moviePoster} className="w-full h-full object-cover" />
 
                 {isActive && (
-                    <h2 className="absolute bottom-2 left-2 text-white font-semibold">
-                        {movieDetails.title}
+                    <h2
+                        className=" text-white font-semibold absolute bottom-0 left-0 bg-black bg-opacity-40 px-2 rounded-tr-lg"
+                    >
+                        {movieDetails.title || movieDetails.name}
                     </h2>
                 )}
             </div>
@@ -83,7 +86,9 @@ function MovieCard({ moviePoster , movieDetails }) {
                 createPortal(
                     <MovieDetailsModal
                         poster={moviePoster}
+                        movieDetails={movieDetails}
                         setModalOpen={setModalOpen}
+                        type={type}
                     />,
                     document.body
                 )}
