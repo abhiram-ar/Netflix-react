@@ -8,7 +8,7 @@ export default function App() {
         <>
             <Navbar>navbar</Navbar>
             <Hero></Hero>
-            <div className="bg-black mt-[-4em]">
+            <div className="bg-black">
                 <MovieList></MovieList>
                 <MovieList></MovieList>
                 <MovieList></MovieList>

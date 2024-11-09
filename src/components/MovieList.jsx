@@ -15,14 +15,19 @@ function MovieList() {
         carosal.current.scrollLeft += 1400;
     }
     return (
-        <div className="relative mb-16">
-          <h2 className="ml-16 mb-2 text-3xl font-bold text-white">Trending</h2>
-            <div ref={carosal} className="ml-16 overflow-hidden scroll-smooth">
-                <div className="inline-flex flex-nowrap gap-2">
+        <div className="relative mt-[-8em]">
+            <h2 className="ml-16 mb-[-2em] mb-2 text-3xl font-bold text-white">
+                Trending
+            </h2>
+            <div
+                ref={carosal}
+                className="pl-16 h-[27em] items-center scroll-smooth overflow-hidden"
+            >
+                <div className="inline-flex mt-20 flex-nowrap gap-2">
                     {movieList.map((movie) => {
                         return (
                             <MovieCard
-                                className=""
+                                className
                                 key={movie.id}
                                 moviePoster={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                             />
@@ -31,14 +36,14 @@ function MovieList() {
                 </div>
             </div>
             <button
-                className="absolute top-20 left-0 h-28 p-1 text-white  bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl"
+                className="absolute top-20 left-0 h-28 p-1 text-white  bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl z-30"
                 onClick={hanldeLeftClick}
             >
                 <ChevronLeftIcon fontSize="large" />
             </button>
             <button
                 onClick={hanldeRightClick}
-                className="absolute top-20 right-0 h-28 p-1 text-white bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl"
+                className="absolute top-20 right-0 h-28 p-1 text-white bg-black bg-opacity-10 hover:bg-opacity-50 opacity-0 hover:opacity-100 rounded-3xl z-30"
             >
                 <ChevronRightIcon fontSize="large" />
             </button>
