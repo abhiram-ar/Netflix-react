@@ -25,14 +25,14 @@ function Hero() {
                     <h3 className="text-white text-4xl font-semibold mt-5">
                         #2 in Movies Today
                     </h3>
-                    <br />
-                    <p className="text-white text-2xl">
+                   
+                    <p className= " mt-4 text-white text-2xl">
                         A man makes a bittersweet journey back to his hometown
                         after 22 years and meets an insistent yet kindhearted
                         relative whose name he can&apos;t remember.
                     </p>
 
-                    <div className=" mt-10 text-white flex gap-5">
+                    <div className=" mt-8 text-white flex gap-5">
                         <button className="py-3 px-10 bg-white hover:opacity-80 text-black flex items-center gap-3 rounded-md">
                             <PlayArrowIcon
                                 className="ml-[-15px]"

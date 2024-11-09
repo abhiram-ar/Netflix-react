@@ -2,7 +2,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { tempMovieData } from "../searchDetail";
 
 // eslint-disable-next-line react/prop-types
-function MovieDetailsModal({ poster, setModalOpen, movieData=tempMovieData }) {
+function MovieDetailsModal({
+    poster,
+    setModalOpen,
+    movieData = tempMovieData,
+}) {
     return (
         <div className=" w-screen inset-0 fixed bg-black z-40 bg-opacity-80">
             {/* modal */}

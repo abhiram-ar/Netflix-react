@@ -4,7 +4,7 @@ import { useRef } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-function MovieList() {
+function MovieList({movieData = movieList, sectionName}) {
     const carosal = useRef(null);
 
     function hanldeLeftClick() {
@@ -17,14 +17,14 @@ function MovieList() {
     return (
         <div className="relative mt-[-8em]">
             <h2 className="ml-16 mb-[-2em] text-3xl font-bold text-white">
-                Trending
+                {sectionName}
             </h2>
             <div
                 ref={carosal}
                 className="pl-16 h-[27em] items-center scroll-smooth overflow-hidden"
             >
                 <div className="inline-flex mt-20 flex-nowrap gap-3">
-                    {movieList.map((movie) => {
+                    {movieData.map((movie) => {
                         return (
                             <MovieCard
                                 key={movie.id}
