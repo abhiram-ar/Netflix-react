@@ -1,5 +1,8 @@
 import CloseIcon from "@mui/icons-material/Close";
-function MovieDetailsModal({ poster, setModalOpen }) {
+import { tempMovieData } from "../searchDetail";
+
+// eslint-disable-next-line react/prop-types
+function MovieDetailsModal({ poster, setModalOpen, movieData=tempMovieData }) {
     return (
         <div className=" w-screen inset-0 fixed bg-black z-40 bg-opacity-80">
             {/* modal */}
@@ -19,7 +22,7 @@ function MovieDetailsModal({ poster, setModalOpen }) {
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/0" />
                     <div className="absolute h-96 inset-0 bg-gradient-to-t from-[#181818]/100 via-transparent to-transparent" />
                     <h2 className="absolute bottom-10 left-10 text-white text-5xl">
-                        Meiyazhagan
+                        {movieData.title}
                     </h2>
                 </div>
                 {/* details */}
@@ -27,31 +30,32 @@ function MovieDetailsModal({ poster, setModalOpen }) {
                     <div className="flex">
                         <div className="w-2/3 pr-10">
                             <p className="text-zinc-400 font-semibold">
-                                2024 2h 38m{" "}
+                                {movieData.release_date.split("-")[0]}
+                                {` ${Math.floor(movieData.runtime / 60)}hr ${
+                                    movieData.runtime % 60
+                                }min `}
                                 <span className="border h-fit px-1 text-[0.7em]">
                                     HD
                                 </span>
                             </p>
-                            <p className="mt-2">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Deleniti atque inventore amet,
-                                dolores quibusdam facere aliquid voluptate
-                                eligendi dolorum iusto aut impedit, vitae nisi
-                                harum delectus libero recusandae, a provident!
-                            </p>
+                            <p className="mt-2">{movieData.overview}</p>
                         </div>
                         <div>
                             <p className="mt-6">
                                 <span className="font-semibold text-zinc-500">
                                     Genres:{" "}
                                 </span>
-                                Drama, Tamil
+                                {movieData.genres
+                                    .map((genre) => genre.name)
+                                    .join(", ")}
                             </p>
                             <p className="mt-2">
                                 <span className="font-semibold text-zinc-500">
                                     Available in:{" "}
                                 </span>
-                                Tamil, malayalam
+                                {movieData.spoken_languages
+                                    .map((language) => language.name)
+                                    .join(", ")}
                             </p>
                         </div>
                     </div>

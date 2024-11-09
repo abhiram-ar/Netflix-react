@@ -16,19 +16,19 @@ function MovieList() {
     }
     return (
         <div className="relative mt-[-8em]">
-            <h2 className="ml-16 mb-[-2em] mb-2 text-3xl font-bold text-white">
+            <h2 className="ml-16 mb-[-2em] text-3xl font-bold text-white">
                 Trending
             </h2>
             <div
                 ref={carosal}
                 className="pl-16 h-[27em] items-center scroll-smooth overflow-hidden"
             >
-                <div className="inline-flex mt-20 flex-nowrap gap-2">
+                <div className="inline-flex mt-20 flex-nowrap gap-3">
                     {movieList.map((movie) => {
                         return (
                             <MovieCard
-                                className
                                 key={movie.id}
+                                movieDetails={movie}
                                 moviePoster={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                             />
                         );
