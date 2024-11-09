@@ -3,11 +3,18 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import { useState } from "react";
+import MovieDetailsModal from "./MovieDetailsModal";
+import { createPortal } from "react-dom";
 
 function MovieCard({ moviePoster }) {
     const [isActive, setActive] = useState(false);
+    const [ismodalOpen, setModalOpen] = useState(false);
 
+    if(ismodalOpen === true && isActive === true) setActive(false)
 
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
 
     return (
         <div
@@ -34,26 +41,29 @@ function MovieCard({ moviePoster }) {
                             <PlayCircleRoundedIcon
                                 sx={{ fontSize: 32, marginRight: "-5px" }}
                             />
-                            <div className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full ">
+                            <button className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full ">
                                 <AddOutlinedIcon sx={{ fontSize: 20 }} />
-                            </div>
-                            <div className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full">
+                            </button>
+                            <button className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full">
                                 <ThumbUpOutlinedIcon sx={{ fontSize: 15 }} />
-                            </div>
+                            </button>
                         </div>
-                        <div className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full">
+                        <button
+                            onClick={handleModalOpen}
+                            className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full"
+                        >
                             <ExpandMoreOutlinedIcon sx={{ fontSize: 20 }} />
-                        </div>
+                        </button>
                     </div>
 
                     <div className="text-[#bbbbbb] flex gap-2 items-center mt-2 ml-1">
-                        <spam className="h-fit text-[0.7em] border  border-[#bbbbbb] px-1">
+                        <span className="h-fit text-[0.7em] border  border-[#bbbbbb] px-1">
                             U/A 7+
-                        </spam>
-                        <spam className="text-[.7em]">2h 38m</spam>
-                        <spam className="border font-bold italic text-[0.7em] border-[#bbb] h-fit px-1 ">
+                        </span>
+                        <span className="text-[.7em]">2h 38m</span>
+                        <span className="border font-bold italic text-[0.7em] border-[#bbb] h-fit px-1 ">
                             HD
-                        </spam>
+                        </span>
                     </div>
                     <div className="flex mt-2 text-[.7em]">
                         <p className="after:text-[#979797] after:content-['•'] after:px-2">
@@ -66,6 +76,14 @@ function MovieCard({ moviePoster }) {
                     </div>
                 </div>
             )}
+            {ismodalOpen &&
+                createPortal(
+                    <MovieDetailsModal
+                        poster={moviePoster}
+                        setModalOpen={setModalOpen}
+                    />,
+                    document.body
+                )}
         </div>
     );
 }
