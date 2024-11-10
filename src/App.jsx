@@ -3,21 +3,47 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import MovieList from "./components/MovieList";
 import Navbar from "./components/Navbar";
+import { auth, db } from "./firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
-    const [nowPlayingMovieData, setData] = useState(null);
-    const [popularMovieData, setPopularMovieData] = useState(null);
-    const [topRatedMovieData, setTopRatedMovieData] = useState(null);
-    const [upComingMovieData, setUpComingMovieData] = useState(null);
+    const [nowPlayingMovieData, setNowPlayingData] = useState();
+    const [popularMovieData, setPopularMovieData] = useState();
+    const [topRatedMovieData, setTopRatedMovieData] = useState();
+    const [upComingMovieData, setUpComingMovieData] = useState();
 
-    const [airingTodaySeriesData, setAiringTodaySeriesData] = useState(null);
-    const [poppularSeriesData, setPopularSeriesData] = useState(null);
-    const [topRatedSeriesData, setTopRatedSeriesData] = useState(null);
+    const [airingTodaySeriesData, setAiringTodaySeriesData] = useState();
+    const [poppularSeriesData, setPopularSeriesData] = useState();
+    const [topRatedSeriesData, setTopRatedSeriesData] = useState();
+
+    const [userDetails, setUserDetails] = useState(null);
+
+    const navigate = useNavigate();
+    if (!auth.currentUser) navigate("/login");
+
+    const fetchUserDetails = async () => {
+        auth.onAuthStateChanged(async (user) => {
+            console.log(user);
+
+            const docRef = doc(db, "Users", user.uid);
+            //getting additional info of user form DB
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setUserDetails(docSnap.data());
+                console.log(docSnap.data());
+            } else {
+                console.log(`user is not logged in`);
+            }
+        });
+    };
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, []);
 
     // movies data fetching
     useEffect(() => {
-
-
         const options = {
             method: "GET",
             headers: {
@@ -34,7 +60,7 @@ export default function App() {
             .then((res) => res.json())
             .then((res) => {
                 console.log(`now playing data fetch sucessful`);
-                setData(res);
+                setNowPlayingData(res);
             })
             .catch((err) => console.error(`nowplaying data fetch errro`, err));
 
@@ -129,35 +155,37 @@ export default function App() {
                 )
             );
     }, []);
+    
+    
+    
 
     return (
         <div>
-            
-            <Navbar>navbar</Navbar>
+            <Navbar userDetails={userDetails}>navbar</Navbar>
             <Hero></Hero>
             <div className="bg-black mt-5">
                 {nowPlayingMovieData && (
                     <MovieList
                         sectionName="Now Playing"
-                        movieData={nowPlayingMovieData.results}
+                        movieData={nowPlayingMovieData?.results}
                     />
                 )}
                 {popularMovieData && (
                     <MovieList
                         sectionName="Popular Movies"
-                        movieData={popularMovieData.results}
+                        movieData={popularMovieData?.results}
                     />
                 )}
                 {topRatedMovieData && (
                     <MovieList
                         sectionName="Top Rated Movies"
-                        movieData={topRatedMovieData.results}
+                        movieData={topRatedMovieData?.results}
                     />
                 )}
                 {upComingMovieData && (
                     <MovieList
                         sectionName="Upcoming Movies"
-                        movieData={upComingMovieData.results}
+                        movieData={upComingMovieData?.results}
                     />
                 )}
 
@@ -165,21 +193,22 @@ export default function App() {
                 {airingTodaySeriesData && (
                     <MovieList
                         sectionName="TV series Airing Today"
-                        movieData={airingTodaySeriesData.results}
+                        movieData={airingTodaySeriesData?.results}
                         type="series"
                     />
                 )}
                 {poppularSeriesData && (
                     <MovieList
                         sectionName="Popular TV Series"
-                        movieData={poppularSeriesData.results}
+                        movieData={poppularSeriesData?.results}
                         type="series"
                     />
                 )}
+
                 {topRatedMovieData && (
                     <MovieList
                         sectionName="Top Rated Series"
-                        movieData={topRatedSeriesData.results}
+                        movieData={topRatedSeriesData?.results}
                         type="series"
                     />
                 )}

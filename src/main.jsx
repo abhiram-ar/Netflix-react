@@ -5,15 +5,22 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPlayer from "./components/VideoPlayer.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
+import Login from "./components/auth/Login.jsx"
+
+
 
 const appRouter = createBrowserRouter([
     {
-        path: "/",
+        path: "/home",
         element: <App />,
     },
     {
-      path:"signup",
-      element: <SignUp/>
+        path: "signup",
+        element: <SignUp />,
+    },
+    {
+        path: "login",
+        element: <Login />,
     },
     {
         path: "/play",

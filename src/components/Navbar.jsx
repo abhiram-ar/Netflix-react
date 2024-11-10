@@ -1,7 +1,24 @@
 import logo from "./../assets/netflix-logo.png";
 import avatar from "./../assets/avatar.png";
+import { useState } from "react";
+import { auth } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({userDetails}) {
+    const [dropDown, setDropDown] = useState(false)
+    const navigate = useNavigate()
+    
+    async function handleSignOut(){
+        try{
+
+            await auth.signOut()
+            console.log(`signout sucessful`);
+            navigate("/login")
+        }catch(err){
+            console.log(`error while loggin out`);
+        }
+    }
+
     return (
         <div className="w-screen fixed flex justify-between z-30 py-5 px-16 ">
             <div className="flex gap-10 justify-center items-center]">
@@ -16,14 +33,15 @@ function Navbar() {
                 </ul>
             </div>
 
-            <div className="flex items-center gap-5">
+            <div className=" flex items-center gap-5">
                 <input placeholder="search" type="search" name="searchQuery" />
-                <span>not</span>
-                <div>
-                    <img src={avatar} alt="userProfilePic" />
+            
+                <span className="text-white font-semibold">{userDetails?.username || "loading..."}</span>
+                <div className="relative" onMouseEnter={()=>setDropDown(true)} onMouseLeave={()=>(setDropDown(false))}>
+                    <img className="rounded-sm" src={avatar} alt="userProfilePic" />
 
-                    <div className="hidden">
-                        <ul>
+                    <div className={`${dropDown ? "visible" : "hidden"} absolute top-8 -right-5 text-white w-48 bg-black bg-opacity-95  rounded-sm `}>
+                        <ul className="flex flex-col gap-3 p-5">
                             <li>
                                 <a href="#">Manange profiles</a>
                             </li>
@@ -37,7 +55,8 @@ function Navbar() {
                                 <a href="#"></a>Help Center
                             </li>
                         </ul>
-                        <a href="#">Sign out of Netflix</a>
+                        <hr className=""/>
+                        <button className="p-5" onClick={handleSignOut}>Sign out of Netflix</button>
                     </div>
                 </div>
             </div>

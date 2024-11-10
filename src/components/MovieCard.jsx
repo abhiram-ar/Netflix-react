@@ -18,6 +18,8 @@ function MovieCard({ moviePoster, movieDetails, type }) {
         document.body.style.overflowY = "hidden"
     };
 
+    if(!movieDetails.backdrop_path){ return}
+
     return (
         <div
             onMouseEnter={() => setActive(true)}
