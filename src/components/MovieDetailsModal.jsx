@@ -1,6 +1,10 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { tempMovieData } from "../searchDetail";
 import { useEffect, useState } from "react";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function MovieDetailsModal({
@@ -10,6 +14,7 @@ function MovieDetailsModal({
     type = "movie",
 }) {
     const [movieData, setMovieData] = useState(null);
+    const navigate = useNavigate();
     //const movieData = tempMovieData
 
     useEffect(() => {
@@ -42,7 +47,8 @@ function MovieDetailsModal({
     return (
         <div className=" w-screen inset-0 fixed bg-black z-40 bg-opacity-80">
             {/* modal */}
-            <div className="animate-jump-in relative w-[45em] m-auto mt-20 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300">
+            <div className="animate-jump-in relative w-[45em] m-auto mt-16 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300">
+                {/* modal header */}
                 <div className="relative h-96 w-full">
                     <button
                         onClick={() => {
@@ -57,14 +63,39 @@ function MovieDetailsModal({
                     <div className="absolute inset-0 bg-gradient-to-b from-1% from-black/70 via-15% via-transparent to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/0" />
                     <div className="absolute h-96 inset-0 bg-gradient-to-t from-[#181818]/100 via-transparent to-transparent" />
-                    <h2 className="absolute bottom-10 left-10 text-white text-5xl">
-                        {movieDetails.title ||
-                            movieDetails.name ||
-                            movieData.title}
-                    </h2>
+                    <div className="absolute bottom-[-1em] left-10">
+                        <h2 className=" text-white text-5xl font-bold">
+                            {movieDetails.title ||
+                                movieDetails.name ||
+                                movieData.title}
+                        </h2>
+
+                        <div className="mt-8 flex gap-4">
+                            <button
+                                onClick={() => {
+                                    
+                                    navigate(`/watch/${movieData.id}`);
+                                    document.body.style.overflowY = "unset";
+                                }}
+                                className="py-1 px-6  bg-white hover:opacity-80 text-black flex items-center gap-3 rounded-md"
+                            >
+                                <PlayArrowIcon
+                                    className="ml-[-15px]"
+                                    sx={{ fontSize: 45 }}
+                                />
+                                <span className="text-xl font-bold">Play</span>
+                            </button>
+                            <button className="h-5 w-5 flex justify-center p-6 items-center bg-[#232323] border-2 border-[#979797] rounded-full text-white">
+                                <AddOutlinedIcon sx={{ fontSize: 35 }} />
+                            </button>
+                            <button className="h-5 w-5 flex justify-center p-6 items-center bg-[#232323] border-2 border-[#979797] rounded-full text-white">
+                                <ThumbUpOutlinedIcon sx={{ fontSize: 25 }} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 {/* details */}
-                <div className=" text-white bg-[#181818] p-10">
+                <div className=" text-white bg-[#181818] px-10 py-12">
                     <div className="flex">
                         <div className="w-2/3 pr-10">
                             <p className="text-zinc-400 font-semibold">

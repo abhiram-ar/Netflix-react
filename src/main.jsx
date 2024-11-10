@@ -5,10 +5,8 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPlayer from "./components/VideoPlayer.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
-import Login from "./components/auth/Login.jsx"
+import Login from "./components/auth/Login.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
-
-
 
 const appRouter = createBrowserRouter([
     {
@@ -24,13 +22,13 @@ const appRouter = createBrowserRouter([
         element: <Login />,
     },
     {
-        path: "/play",
+        path: "/watch/:id?",
         element: <VideoPlayer />,
     },
     {
-      path:"test",
-      element: <LoadingSpinner/>
-    }
+        path: "test",
+        element: <LoadingSpinner />,
+    },
 ]);
 
 createRoot(document.getElementById("root")).render(

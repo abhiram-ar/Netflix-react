@@ -19,11 +19,10 @@ export default function App() {
     const [topRatedSeriesData, setTopRatedSeriesData] = useState();
 
     const [userDetails, setUserDetails] = useState(null);
-    const [loading, setloading] = useState(true)
+    const [loading, setloading] = useState(true);
 
     // early redirect
     const navigate = useNavigate();
-    
 
     const CurrentUserContext = createContext("");
 
@@ -31,20 +30,19 @@ export default function App() {
         auth.onAuthStateChanged(async (user) => {
             console.log(`current user :`, user);
 
-            if(!user) navigate("/login")
+            if (!user) navigate("/login");
 
             const docRef = doc(db, "Users", user.uid);
             //getting additional info of user form DB
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setUserDetails(docSnap.data());
-                console.log(`docsnap data : `,docSnap.data());
-                setloading(false)
+                console.log(`docsnap data : `, docSnap.data());
+                setloading(false);
             } else {
                 console.log(`user is not logged in`);
-                setloading(false)
+                setloading(false);
                 navigate("/login");
-
             }
         });
     };
@@ -167,7 +165,7 @@ export default function App() {
             );
     }, []);
 
-    if(loading) return (<LoadingSpinner/>)
+    if (loading) return <LoadingSpinner />;
 
     return (
         <div>

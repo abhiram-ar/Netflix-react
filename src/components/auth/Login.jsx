@@ -4,23 +4,29 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setloading] = useState(true);
     const navigate = useNavigate();
 
     const fetchUserDetails = async () => {
         auth.onAuthStateChanged(async (user) => {
             console.log(user);
 
+            if (!user) setloading(false);
+
             const docRef = doc(db, "Users", user.uid);
 
             //getting additional info of user form DB
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
+                setloading(false);
                 navigate("/home");
             } else {
+                setloading(false);
                 console.log(`user is not logged in`);
             }
         });
@@ -40,6 +46,8 @@ function Login() {
             console.log(`error while login`, err);
         }
     }
+
+    if (loading) return <LoadingSpinner />;
 
     return (
         <div className="overflow-hidden h-screen">

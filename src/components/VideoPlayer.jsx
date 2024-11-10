@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-function VideoPlayer({ movieID = 698687 }) {
-    const [videoID, setVideoID] = useState("tgbNymZ7vqY");
+function VideoPlayer() {
+    // default movie id : 698687
+    //default video id : tgbNymZ7vqY
 
+    const [videoID, setVideoID] = useState("");
+    const [loading, setLoading] = useState(true)
+
+    const {id: movieID} = useParams();
+    console.log("moviee iD",movieID)
     useEffect(() => {
         const options = {
             method: "GET",
@@ -21,9 +28,13 @@ function VideoPlayer({ movieID = 698687 }) {
             .then((res) => {
                 setVideoID(res.results[1].key);
                 console.log(`sucessfull fetching a video of the movie`);
+                setLoading(false)
             })
-            .catch((err) => console.error(err));
-    }, [videoID]);
+            .catch((err) => {console.error(`error while fetchng video details and id`,err); setLoading(false)});
+
+    }, [movieID]);
+
+
 
     return (
         <div className="h-screen w-screen overflow-hidden absolute z-50">
