@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import MovieList from "./components/MovieList";
@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import { auth, db } from "./firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 export default function App() {
     const [nowPlayingMovieData, setNowPlayingData] = useState();
@@ -18,22 +19,32 @@ export default function App() {
     const [topRatedSeriesData, setTopRatedSeriesData] = useState();
 
     const [userDetails, setUserDetails] = useState(null);
+    const [loading, setloading] = useState(true)
 
+    // early redirect
     const navigate = useNavigate();
-    if (!auth.currentUser) navigate("/login");
+    
+
+    const CurrentUserContext = createContext("");
 
     const fetchUserDetails = async () => {
         auth.onAuthStateChanged(async (user) => {
-            console.log(user);
+            console.log(`current user :`, user);
+
+            if(!user) navigate("/login")
 
             const docRef = doc(db, "Users", user.uid);
             //getting additional info of user form DB
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setUserDetails(docSnap.data());
-                console.log(docSnap.data());
+                console.log(`docsnap data : `,docSnap.data());
+                setloading(false)
             } else {
                 console.log(`user is not logged in`);
+                setloading(false)
+                navigate("/login");
+
             }
         });
     };
@@ -155,65 +166,67 @@ export default function App() {
                 )
             );
     }, []);
-    
-    
-    
+
+    if(loading) return (<LoadingSpinner/>)
 
     return (
         <div>
-            <Navbar userDetails={userDetails}>navbar</Navbar>
-            <Hero></Hero>
-            <div className="bg-black mt-5">
-                {nowPlayingMovieData && (
-                    <MovieList
-                        sectionName="Now Playing"
-                        movieData={nowPlayingMovieData?.results}
-                    />
-                )}
-                {popularMovieData && (
-                    <MovieList
-                        sectionName="Popular Movies"
-                        movieData={popularMovieData?.results}
-                    />
-                )}
-                {topRatedMovieData && (
-                    <MovieList
-                        sectionName="Top Rated Movies"
-                        movieData={topRatedMovieData?.results}
-                    />
-                )}
-                {upComingMovieData && (
-                    <MovieList
-                        sectionName="Upcoming Movies"
-                        movieData={upComingMovieData?.results}
-                    />
-                )}
+            <CurrentUserContext.Provider value={userDetails}>
+                <Navbar userDetails={userDetails}>navbar</Navbar>
+                <Hero></Hero>
 
-                {/* series  */}
-                {airingTodaySeriesData && (
-                    <MovieList
-                        sectionName="TV series Airing Today"
-                        movieData={airingTodaySeriesData?.results}
-                        type="series"
-                    />
-                )}
-                {poppularSeriesData && (
-                    <MovieList
-                        sectionName="Popular TV Series"
-                        movieData={poppularSeriesData?.results}
-                        type="series"
-                    />
-                )}
+                <div className="bg-black mt-5">
+                    {nowPlayingMovieData && (
+                        <MovieList
+                            sectionName="Now Playing"
+                            movieData={nowPlayingMovieData?.results}
+                        />
+                    )}
+                    {popularMovieData && (
+                        <MovieList
+                            sectionName="Popular Movies"
+                            movieData={popularMovieData?.results}
+                        />
+                    )}
+                    {topRatedMovieData && (
+                        <MovieList
+                            sectionName="Top Rated Movies"
+                            movieData={topRatedMovieData?.results}
+                        />
+                    )}
+                    {upComingMovieData && (
+                        <MovieList
+                            sectionName="Upcoming Movies"
+                            movieData={upComingMovieData?.results}
+                        />
+                    )}
 
-                {topRatedMovieData && (
-                    <MovieList
-                        sectionName="Top Rated Series"
-                        movieData={topRatedSeriesData?.results}
-                        type="series"
-                    />
-                )}
-                <Footer></Footer>
-            </div>
+                    {/* series  */}
+                    {airingTodaySeriesData && (
+                        <MovieList
+                            sectionName="TV series Airing Today"
+                            movieData={airingTodaySeriesData?.results}
+                            type="series"
+                        />
+                    )}
+                    {poppularSeriesData && (
+                        <MovieList
+                            sectionName="Popular TV Series"
+                            movieData={poppularSeriesData?.results}
+                            type="series"
+                        />
+                    )}
+
+                    {topRatedMovieData && (
+                        <MovieList
+                            sectionName="Top Rated Series"
+                            movieData={topRatedSeriesData?.results}
+                            type="series"
+                        />
+                    )}
+                    <Footer></Footer>
+                </div>
+            </CurrentUserContext.Provider>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPlayer from "./components/VideoPlayer.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
 import Login from "./components/auth/Login.jsx"
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
 
 
@@ -26,6 +27,10 @@ const appRouter = createBrowserRouter([
         path: "/play",
         element: <VideoPlayer />,
     },
+    {
+      path:"test",
+      element: <LoadingSpinner/>
+    }
 ]);
 
 createRoot(document.getElementById("root")).render(

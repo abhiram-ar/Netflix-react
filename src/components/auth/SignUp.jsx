@@ -3,6 +3,7 @@ import backdrop from "./../../assets/loginBackdrop.jpg";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 function SignUp() {
     const [username, setUsername] = useState("")
@@ -66,9 +67,9 @@ function SignUp() {
                     </button>
                 <p className="text-white mt-20">
                     Has a Netflx account?{" "}
-                    <a href="#" className="font-semibold">
+                    <Link to="/login" className="font-semibold">
                         Login.
-                    </a>
+                    </Link>
                 </p>
                 </form>
         </div>

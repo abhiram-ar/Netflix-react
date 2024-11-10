@@ -1,27 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import backdrop from "./../../assets/loginBackdrop.jpg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate()
-    
-    
+    const navigate = useNavigate();
+
+    const fetchUserDetails = async () => {
+        auth.onAuthStateChanged(async (user) => {
+            console.log(user);
+
+            const docRef = doc(db, "Users", user.uid);
+
+            //getting additional info of user form DB
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                navigate("/home");
+            } else {
+                console.log(`user is not logged in`);
+            }
+        });
+    };
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, []);
+
     async function handleLogin(e) {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
             console.log(`login Sucessful`);
-            navigate("/home")
+            navigate("/home");
         } catch (err) {
             console.log(`error while login`, err);
         }
     }
+
     return (
         <div className="overflow-hidden h-screen">
             <div
@@ -58,9 +77,9 @@ function Login() {
                 </button>
                 <p className=" text-white mt-20">
                     Don&apos;t have Netflx account?
-                    <a href="#" className="font-semibold">
+                    <Link to="/signup" className="font-semibold">
                         SingUp.
-                    </a>
+                    </Link>
                 </p>
             </form>
         </div>
