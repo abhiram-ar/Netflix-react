@@ -16,6 +16,8 @@ export default function App() {
 
     // movies data fetching
     useEffect(() => {
+
+
         const options = {
             method: "GET",
             headers: {
@@ -129,34 +131,37 @@ export default function App() {
     }, []);
 
     return (
-        <>
+        <div>
+            
             <Navbar>navbar</Navbar>
             <Hero></Hero>
             <div className="bg-black mt-5">
-                {nowPlayingMovieData &&
-                    popularMovieData &&
-                    topRatedMovieData &&
-                    upComingMovieData && (
-                        <>
-                            <MovieList
-                                sectionName="Now Playing"
-                                movieData={nowPlayingMovieData.results}
-                            />
-                            <MovieList
-                                sectionName="Popular Movies"
-                                movieData={popularMovieData.results}
-                            />
-                            <MovieList
-                                sectionName="Top Rated Movies"
-                                movieData={topRatedMovieData.results}
-                            />
-                            <MovieList
-                                sectionName="Upcoming Movies"
-                                movieData={upComingMovieData.results}
-                            />
-                        </>
-                    )}
+                {nowPlayingMovieData && (
+                    <MovieList
+                        sectionName="Now Playing"
+                        movieData={nowPlayingMovieData.results}
+                    />
+                )}
+                {popularMovieData && (
+                    <MovieList
+                        sectionName="Popular Movies"
+                        movieData={popularMovieData.results}
+                    />
+                )}
+                {topRatedMovieData && (
+                    <MovieList
+                        sectionName="Top Rated Movies"
+                        movieData={topRatedMovieData.results}
+                    />
+                )}
+                {upComingMovieData && (
+                    <MovieList
+                        sectionName="Upcoming Movies"
+                        movieData={upComingMovieData.results}
+                    />
+                )}
 
+                {/* series  */}
                 {airingTodaySeriesData && (
                     <MovieList
                         sectionName="TV series Airing Today"
@@ -164,7 +169,6 @@ export default function App() {
                         type="series"
                     />
                 )}
-
                 {poppularSeriesData && (
                     <MovieList
                         sectionName="Popular TV Series"
@@ -172,7 +176,6 @@ export default function App() {
                         type="series"
                     />
                 )}
-
                 {topRatedMovieData && (
                     <MovieList
                         sectionName="Top Rated Series"
@@ -182,6 +185,6 @@ export default function App() {
                 )}
                 <Footer></Footer>
             </div>
-        </>
+        </div>
     );
 }

@@ -4,6 +4,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useState } from "react";
 import MovieDetailsModal from "./MovieDetailsModal";
+import movieList from "../tempmovie";
 function Hero() {
     const [ismodalOpen, setModalOpen] = useState(false);
 
@@ -55,12 +56,13 @@ function Hero() {
                     </div>
                 </div>
             </div>
-
-            {/* modal BG */}
+                            
+            
 
             {ismodalOpen && (
                 <MovieDetailsModal
                     poster={heroPoster}
+                    movieDetails={movieList[0]}
                     setModalOpen={setModalOpen}
                 />
             )}

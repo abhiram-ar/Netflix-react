@@ -116,7 +116,7 @@ function MovieDetailsModal({
                     </div>
                 </div>
 
-                {/* More like thi */}
+                {/* More like this*/}
                 <div></div>
             </div>
         </div>
