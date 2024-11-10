@@ -5,12 +5,14 @@ import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import { useState } from "react";
 import MovieDetailsModal from "./MovieDetailsModal";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function MovieCard({ moviePoster, movieDetails, type }) {
     const [isActive, setActive] = useState(false);
     const [ismodalOpen, setModalOpen] = useState(false);
-
+    const navigate = useNavigate();
+    
     if (ismodalOpen === true && isActive === true) setActive(false);
 
     const handleModalOpen = () => {
@@ -31,9 +33,7 @@ function MovieCard({ moviePoster, movieDetails, type }) {
                 <img src={moviePoster} className="w-full h-full object-cover" />
 
                 {isActive && (
-                    <h2
-                        className=" text-white font-semibold absolute bottom-0 left-0 bg-black bg-opacity-40 px-2 rounded-tr-lg"
-                    >
+                    <h2 className=" text-white font-semibold absolute bottom-0 left-0 bg-black bg-opacity-40 px-2 rounded-tr-lg">
                         {movieDetails.title || movieDetails.name}
                     </h2>
                 )}
@@ -46,6 +46,10 @@ function MovieCard({ moviePoster, movieDetails, type }) {
                     <div className="flex justify-between items-center">
                         <div className="flex gap-2 justify-center items-center">
                             <PlayCircleRoundedIcon
+                                onClick={() => {
+                                    navigate(`/watch/${movieDetails.id}`);
+                                    document.body.style.overflowY = "unset";
+                                }}
                                 sx={{ fontSize: 32, marginRight: "-5px" }}
                             />
                             <button className="h-5 w-5 flex justify-center p-3 items-center bg-[#232323] border-2 border-[#979797] rounded-full ">

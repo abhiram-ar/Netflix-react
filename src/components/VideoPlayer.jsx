@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 function VideoPlayer() {
     // default movie id : 698687
@@ -34,14 +35,14 @@ function VideoPlayer() {
 
     }, [movieID]);
 
-
+    if(loading) return (<LoadingSpinner/>)
 
     return (
         <div className="h-screen w-screen overflow-hidden absolute z-50">
             <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${videoID}?si=u7w_ooN3wawYDZKH`}
+                src={`https://www.youtube.com/embed/${videoID}?autoplay=1&mute=1`}
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
