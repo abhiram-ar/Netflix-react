@@ -7,8 +7,13 @@ import VideoPlayer from "./components/VideoPlayer.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
 import Login from "./components/auth/Login.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import LandingPage from "./components/Landing/LandingPage.jsx";
 
 const appRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <LandingPage />,
+    },
     {
         path: "/home",
         element: <App />,
