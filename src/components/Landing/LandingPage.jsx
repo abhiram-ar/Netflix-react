@@ -8,12 +8,12 @@ const LandingPage = () => {
         <div className="">
             <div className="relative h-screen overflow-x-hidden bg-black">
                 <img
-                    className="absolute w-[250em] -z-0"
+                    className="absolute w-[150em] h-screen -z-0"
                     src={MovieGrid}
                     alt=""
                 />
                 <div className="absolute w-screen h-32 bg-gradient-to-b from-black to-transparent"></div>
-                <div className="absolute z-10 w-screen h-[100em] backdrop-blur-2xl">
+                <div className="absolute z-10 w-screen h-[70em] backdrop-blur-xl">
                     <nav className="flex px-12 py-8 justify-between items-center">
                         <img className="max-h-10" src={netflixLogo} />
                         <div className="flex gap-5">
@@ -133,15 +133,14 @@ const LandingPage = () => {
                             placeholder="email address"
                             className="bg-zinc-800  rounded-full border-2 border-zinc-400/30 h-16 w-80 px-10 text-white"
                         />
-                        <button className=" bg-[#E50914] text-2xl font-semibold text-white  rounded-full border-2 border-zinc-400/30 h-16 px-10">
-                            Get Started
-                        </button>
+                        <Link to="/login">
+                            <button className=" bg-[#E50914] text-2xl font-semibold text-white  rounded-full border-2 border-zinc-400/30 h-16 px-10">
+                                Get Started
+                            </button>
+                        </Link>
                     </div>
-                    <h2>Trending</h2>
-                    <h2>Only on netflix</h2>
-                    <h2>More Reason to Join</h2>
-                    <h2>Frequently Asked Question</h2>
-                    <div className="z-10">
+
+                    <div className="z-10 mt-44">
                         <Footer />
                     </div>
                 </div>

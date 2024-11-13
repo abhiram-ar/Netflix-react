@@ -5,12 +5,19 @@ import { auth, db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
+import { useForm } from "react-hook-form";
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [loading, setloading] = useState(true);
     const navigate = useNavigate();
+    
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+
 
     const fetchUserDetails = async () => {
         auth.onAuthStateChanged(async (user) => {
@@ -36,10 +43,10 @@ function Login() {
         fetchUserDetails();
     }, []);
 
-    async function handleLogin(e) {
-        e.preventDefault();
+    async function handleLogin(data) {
+        console.log(data)
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, data.email, data.password);
             console.log(`login Sucessful`);
             navigate("/home");
         } catch (err) {
@@ -58,25 +65,45 @@ function Login() {
                 className="absolute h-screen w-screen brightness-[0.45]"
             ></div>
             <form
-                onSubmit={handleLogin}
+                onSubmit={handleSubmit((data) => handleLogin(data))}
                 className="absolute top-20 bottom-20 left-40 right-40 w-[30em] m-auto bg-black bg-opacity-70 p-20 flex flex-col gap-5"
             >
                 <h3 className="text-white text-3xl font-bold">Login</h3>
 
+                {/* login */}
                 <input
-                    type="email"
-                    name="email"
+                    {...register("email", {
+                        required: true,
+                        pattern:
+                            /[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/,
+                    })}
                     placeholder="email"
-                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-zinc-600 bg-opacity-20 py-4 px-4 rounded-sm border border-zinc-800 font-medium text-white"
                 />
+                {errors.email?.type === "required" && (
+                    <p className="text-red-500 text-sm">Email is required</p>
+                )}
+                {errors.email?.type === "pattern" && (
+                    <p className="text-red-500 text-sm">Invalid Email</p>
+                )}
+
+                {/* password */}
                 <input
                     type="password"
-                    name="password"
+                    {...register("password", { required: true, minLength: 8 })}
                     placeholder="password"
-                    onChange={(e) => setPassword(e.target.value)}
                     className="bg-zinc-600 bg-opacity-20 py-4 px-4 rounded-sm border border-zinc-800 font-medium text-white"
                 />
+                {errors.password?.type === "required" && (
+                    <p className="text-red-500 text-sm">
+                        Password is required
+                    </p>
+                )}
+                {errors.password?.type === "minLength" && (
+                    <p className="text-red-500 text-sm">
+                        Password must be atleast 8 characters long
+                    </p>
+                )}
                 <button
                     type="submit"
                     className="bg-[#E50914] hover:bg-[#D50914] p-3 rounded-md font-semibold text-white mt-10"
