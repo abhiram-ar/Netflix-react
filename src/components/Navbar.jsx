@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 
 function Navbar({ userDetails, searchContext }) {
     const [dropDown, setDropDown] = useState(false);
@@ -43,7 +44,7 @@ function Navbar({ userDetails, searchContext }) {
         }
     }
 
-    const fetchSearchResult = (query)=>{
+    const fetchSearchResult = (query) => {
         console.log(`search called`);
         const options = {
             method: "GET",
@@ -60,24 +61,39 @@ function Navbar({ userDetails, searchContext }) {
         )
             .then((res) => res.json())
             .then((res) => {
-                console.log(`search data fetched`, res)
+                console.log(`search data fetched`, res);
                 setSearchResults(res.results);
-                setShowSearchResults(true)
+                setShowSearchResults(true);
             })
             .catch((err) => console.error(err));
+    };
 
+
+    const cancelSearch=()=>{
+        setSearchQuery("")
+        setSearchResults(null)
+        setShowSearchResults(false)
     }
-    
+
     console.log(searchQuery);
     return (
         <div
             className={`w-screen fixed ${
-                scrollPosition > 80 ? "bg-black" : ""
+             scrollPosition > 80 ? "bg-black" : ""
             } flex justify-between z-30 py-5 px-16 transition-colors ease-in-out <delay-0></delay-0> duration-300  `}
         >
-            <div className="flex gap-10 justify-center items-center]">
+            {showSearchResults && (
+                <button onClick={cancelSearch} className="absolute top-20 bg-white rounded-full p-5 size-12 flex justify-center items-center">
+                    <KeyboardBackspaceOutlinedIcon />
+                </button>
+            )}
+            <div className={` flex gap-10 justify-center items-center]`}>
                 <img src={logo} className="h-8" />
-                <ul className="flex gap-5 items-center font-semibold text-white">
+                <ul
+                    className={`${
+                        showSearchResults && "hidden"
+                    } flex gap-5 items-center font-semibold text-white`}
+                >
                     <li>Home</li>
                     <li>TV Shows</li>
                     <li>Movies</li>
@@ -86,25 +102,28 @@ function Navbar({ userDetails, searchContext }) {
                     <li>Browse By language</li>
                 </ul>
             </div>
-
-            <div className="flex justify-between items-center  ">
-                <div className="bg-zinc-200 flex justify-center rounded-md items-center gap-1 ps-5 pe-2 py-1 mr-2">
+            <div className="flex justify-between items-center">
+                <div className="bg-zinc-200 flex justify-centser rounded-md items-center gap-1 ps-5 pe-2 py-1 mr-5">
                     <input
                         placeholder="search"
                         autoFocus="autoFocus"
                         type="text"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e) => {setSearchQuery(e.target.value)
+                            if(e.target.value === "") cancelSearch()
+                        }}
                         className=" w-full outline-none bg-zinc-200"
                     />
-                    <button onClick={()=>{
-                        if (searchQuery === "") return
-                        fetchSearchResult(searchQuery)
-                    }}>
+                    <button
+                        onClick={() => {
+                            if (searchQuery === "") return;
+                            fetchSearchResult(searchQuery);
+                        }}
+                    >
                         <SearchOutlinedIcon />
                     </button>
                 </div>
-                <span className="text-white font-semibold">
+                <span className="text-white font-semibold mr-5">
                     {userDetails?.username || "loading..."}
                 </span>
                 <div

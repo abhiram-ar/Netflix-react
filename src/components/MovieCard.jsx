@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function MovieCard({ moviePoster, movieDetails, type }) {
+function MovieCard({ moviePoster, movieDetails, type, width="w-[20rem]" }) {
     const [isActive, setActive] = useState(false);
     const [ismodalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ function MovieCard({ moviePoster, movieDetails, type }) {
         <div
             onMouseEnter={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
-            className=" w-80 h-fit overflow-hidden rounded-lg shadow-lg shadow-black cursor-pointer transition-transform duration-300 hover:scale-125 hover:z-20"
+            className=  {` ${width}  h-fit overflow-hidden rounded-lg shadow-lg shadow-black cursor-pointer transition-transform duration-300 hover:scale-125 hover:z-20`}
         >
             {/* header */}
             <div className="relative">
