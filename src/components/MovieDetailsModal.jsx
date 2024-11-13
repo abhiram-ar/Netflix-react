@@ -59,7 +59,10 @@ function MovieDetailsModal({
                     >
                         <CloseIcon />
                     </button>
-                    <img className="absolute w-full h-96" src={poster}></img>
+                    <img
+                        className="absolute w-full h-96"
+                        src={`https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`}
+                    ></img>
                     <div className="absolute inset-0 bg-gradient-to-b from-1% from-black/70 via-15% via-transparent to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/0" />
                     <div className="absolute h-96 inset-0 bg-gradient-to-t from-[#181818]/100 via-transparent to-transparent" />
@@ -73,7 +76,6 @@ function MovieDetailsModal({
                         <div className="mt-8 flex gap-4">
                             <button
                                 onClick={() => {
-                                    
                                     navigate(`/watch/${movieData.id}`);
                                     document.body.style.overflowY = "unset";
                                 }}
