@@ -133,9 +133,9 @@ const LandingPage = () => {
                             placeholder="email address"
                             className="bg-zinc-800  rounded-full border-2 border-zinc-400/30 h-16 w-80 px-10 text-white"
                         />
-                        <Link to="/login">
+                        <Link to="/home">
                             <button className=" bg-[#E50914] text-2xl font-semibold text-white  rounded-full border-2 border-zinc-400/30 h-16 px-10">
-                                Get Started
+                                Show catalog
                             </button>
                         </Link>
                     </div>

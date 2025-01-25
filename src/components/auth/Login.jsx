@@ -75,6 +75,7 @@ function Login() {
                     {...register("email", {
                         required: true,
                         pattern:
+                            // eslint-disable-next-line no-useless-escape
                             /[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}/,
                     })}
                     placeholder="email"

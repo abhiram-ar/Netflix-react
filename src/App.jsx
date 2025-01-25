@@ -170,7 +170,6 @@ export default function App() {
             );
     }, []);
 
-    if (loading) return <LoadingSpinner />;
 
     return (
         <div>
