@@ -33,10 +33,6 @@ export default function App() {
 
     const fetchUserDetails = async () => {
         auth.onAuthStateChanged(async (user) => {
-            console.log(`current user :`, user);
-
-            if (!user) navigate("/login");
-
             const docRef = doc(db, "Users", user.uid);
             //getting additional info of user form DB
             const docSnap = await getDoc(docRef);
@@ -170,7 +166,6 @@ export default function App() {
             );
     }, []);
 
-
     return (
         <div>
             <CurrentUserContext.Provider value={userDetails}>
@@ -189,7 +184,7 @@ export default function App() {
                 </Navbar>
 
                 {showSearchResults ? (
-                    <SearchResults movieData={searchResults}/>
+                    <SearchResults movieData={searchResults} />
                 ) : (
                     <>
                         <Hero></Hero>
